@@ -1,23 +1,7 @@
 #!/bin/bash
 
-# Set the directory where Neovim config will be copied
+# Directory where your Neovim configuration is located (adjust as needed)
 CONFIG_DIR="$HOME/.config/nvim"
-
-# Clone your Neovim configuration from GitHub (replace <your-repo-url> with your actual repo URL)
-if [ ! -d "$CONFIG_DIR" ]; then
-    echo "Creating Neovim config directory at $CONFIG_DIR"
-    mkdir -p "$CONFIG_DIR"
-fi
-
-# Clone the repository (if it's not already cloned)
-if [ ! -d "$CONFIG_DIR/.git" ]; then
-    echo "Cloning Neovim configuration from repository..."
-    git clone <your-repo-url> "$CONFIG_DIR"
-else
-    echo "Neovim config already exists, pulling latest changes..."
-    cd "$CONFIG_DIR"
-    git pull
-fi
 
 # Change to the directory where this script is located
 cd "$CONFIG_DIR"
@@ -37,7 +21,7 @@ else
     echo "Neovim is already installed."
 fi
 
-# Install Node.js and npm if not installed (required for Pyright)
+# Install Node.js and npm if not installed (required for Pyright and other LSPs)
 if ! command -v node &> /dev/null
 then
     echo "Node.js not found. Installing Node.js and npm..."
@@ -52,7 +36,7 @@ else
     echo "Node.js is already installed."
 fi
 
-# Install Pyright globally using npm
+# Install Pyright globally using npm (for Python LSP)
 if ! command -v pyright &> /dev/null
 then
     echo "Installing Pyright..."
@@ -61,11 +45,21 @@ else
     echo "Pyright is already installed."
 fi
 
-# Install Mason formatters (Black for Python, ClangFormat for C/C++)
-echo "Setting up Mason formatters..."
+# Install Mason formatters (Black for Python, ClangFormat for C/C++, Stylua for Lua, Isort for Python)
+echo "Setting up Mason formatters and tools..."
 
 # Ensure Mason and formatters are installed using Neovim in headless mode
-nvim --headless -c 'MasonInstall black clang-format stylua' -c 'qa'
+nvim --headless -c 'MasonInstall black clang-format stylua flake8 isort' -c 'qa'
 
-echo "Neovim setup is complete!"
+# Add flake8 to the PATH by updating .bashrc if it's not already there
+if ! command -v flake8 &> /dev/null
+then
+    echo "Adding Mason's flake8 to PATH..."
+    echo 'export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"' >> "$HOME/.bashrc"
+    source "$HOME/.bashrc"
+else
+    echo "flake8 is already in PATH."
+fi
+
+echo "Neovim setup and Mason tools installation is complete!"
 
