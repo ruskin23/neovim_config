@@ -6,40 +6,25 @@ return {
             require("mason").setup()
         end
     },
+
     -- Mason-LSPConfig: Bridges Mason and nvim-lspconfig
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "pyright", "clangd" }, -- Install Lua, Python, and C/C++ LSPs
+                ensure_installed = { "lua_ls", "pyright", "clangd", "rust_analyzer" }, -- Added Rust
             })
         end
     },
-    -- nvim-lspconfig: Setup Python and Lua LSP
+
+    -- nvim-lspconfig: Setup LSPs
     {
         "neovim/nvim-lspconfig",
         config = function()
             local lspconfig = require("lspconfig")
-            -- Python LSP (Pyright)
-            lspconfig.pyright.setup({
-                on_attach = function(client, bufnr)
-                    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-                    -- Key mappings specific to Python
-                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-                    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-                end,
-                settings = {
-                    python = {
-                        analysis = {
-                            typeCheckingMode = "basic",
-                        },
-                    },
-                },
-            })
-            -- Lua LSP (for Neovim config)
+
+            -- Setup each language server individually (you can add more here)
+            lspconfig.pyright.setup({})
             lspconfig.lua_ls.setup({
                 settings = {
                     Lua = {
@@ -49,16 +34,21 @@ return {
                     },
                 },
             })
-            -- C/C++ LSP (Clangd)
-            lspconfig.clangd.setup({
-                on_attach = function(client, bufnr)
-                    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-                    -- Key mappings specific to C/C++
-                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-                    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+            lspconfig.clangd.setup({})
+            lspconfig.rust_analyzer.setup({}) -- Rust LSP
+
+            -- Global key mappings using LspAttach
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local bufnr = args.buf
+                    local opts = { noremap = true, silent = true, buffer = bufnr }
+
+                    -- Key mappings for all LSPs
+                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+                    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
                 end,
             })
         end

@@ -1,5 +1,27 @@
 #!/bin/bash
 
+# Set the directory where Neovim config will be copied
+CONFIG_DIR="$HOME/.config/nvim"
+
+# Clone your Neovim configuration from GitHub (replace <your-repo-url> with your actual repo URL)
+if [ ! -d "$CONFIG_DIR" ]; then
+    echo "Creating Neovim config directory at $CONFIG_DIR"
+    mkdir -p "$CONFIG_DIR"
+fi
+
+# Clone the repository (if it's not already cloned)
+if [ ! -d "$CONFIG_DIR/.git" ]; then
+    echo "Cloning Neovim configuration from repository..."
+    git clone <your-repo-url> "$CONFIG_DIR"
+else
+    echo "Neovim config already exists, pulling latest changes..."
+    cd "$CONFIG_DIR"
+    git pull
+fi
+
+# Change to the directory where this script is located
+cd "$CONFIG_DIR"
+
 # Check if Neovim is installed, if not, install it
 if ! command -v nvim &> /dev/null
 then
@@ -39,22 +61,11 @@ else
     echo "Pyright is already installed."
 fi
 
-# Clone your Neovim configuration from GitHub (replace <your-repo-url> with your actual repo URL)
-CONFIG_DIR="$HOME/.config/nvim"
+# Install Mason formatters (Black for Python, ClangFormat for C/C++)
+echo "Setting up Mason formatters..."
 
-if [ ! -d "$CONFIG_DIR" ]; then
-    echo "Creating Neovim config directory at $CONFIG_DIR"
-    mkdir -p "$CONFIG_DIR"
-fi
-
-if [ ! -d "$CONFIG_DIR/.git" ]; then
-    echo "Cloning Neovim configuration from repository..."
-    git clone <your-repo-url> "$CONFIG_DIR"
-else
-    echo "Neovim config already exists, pulling latest changes..."
-    cd "$CONFIG_DIR"
-    git pull
-fi
+# Ensure Mason and formatters are installed using Neovim in headless mode
+nvim --headless -c 'MasonInstall black clang-format stylua' -c 'qa'
 
 echo "Neovim setup is complete!"
 
