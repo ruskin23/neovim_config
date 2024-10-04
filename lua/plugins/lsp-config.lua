@@ -27,6 +27,7 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             local lspconfig = require("lspconfig")
+            local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
             -- Lua LSP
             lspconfig.lua_ls.setup({
@@ -63,6 +64,30 @@ return {
                     vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format, opts)     -- Format the current buffer
                 end,
             })
+
+            -- General capabilities to enable autocompletion via nvim-cmp
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+
+            -- LSP servers setup with autocomplete capabilities
+            lspconfig.pyright.setup({
+                capabilities = capabilities,
+            })
+
+            lspconfig.lua_ls.setup({
+                capabilities = capabilities,
+            })
+
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+            })
+
+            -- (Optional) Rust setup can be uncommented when installed
+            -- lspconfig.rust_analyzer.setup({
+            --    capabilities = capabilities,
+            -- })
+
+
         end
     }
 }
