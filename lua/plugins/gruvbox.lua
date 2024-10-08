@@ -9,8 +9,7 @@ return {
         vim.g.gruvbox_material_enable_italic = 1 -- Enable italics
         vim.g.gruvbox_material_enable_bold = 1 -- Enable bold text
         vim.g.gruvbox_material_transparent_background = 1 -- Enable transparency
-        vim.g.gruvbox_material_better_performance = 1 -- Optimize for performance
-        
+        vim.g.gruvbox_material_better_performance = 1 -- Optimize for performance 
         -- Custom highlights for line numbers and status line
         vim.cmd([[
           highlight LineNr guifg=#928374
