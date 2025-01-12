@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-This repository contains a complete Neovim configuration tailored for a modern development workflow. It includes essential plugins and features to make coding smoother and more efficient. An `install.sh` script is included to set everything up easily.
+This repository contains my Neovim configuration. An `install.sh` script is included to set everything up easily.
 
 ---
 
@@ -147,5 +147,5 @@ This configuration is modular, so you can easily add or modify plugins. Key file
 ---
 
 ## Credits
-This configuration was built to simplify and enhance the Neovim experience, with inspiration from the Neovim community.
+Claude and GPT-4o. Although they failed at times, then I had to dig through documentation. Why do LSP exist again?
 
