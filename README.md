@@ -3,6 +3,20 @@
 This repository contains my Neovim configuration. An `install.sh` script is included to set everything up easily.
 
 ---
+## **Installed Plugins**
+
+- `auto-cmp.lua`: Autocompletion configuration.
+- `autopairs.lua`: Automatically close pairs like brackets and quotes.
+- `bufferline.lua`: Enhanced buffer line with tabs.
+- `diagnostics.lua`: Displays LSP diagnostics with custom icons.
+- `gitsigns.lua`: Git integration with inline signs.
+- `gruvbox.lua`: Gruvbox theme for Neovim.
+- `lsp-config.lua`: Configuration for Language Server Protocol (LSP).
+- `lualine.lua`: Status line plugin.
+- `neo-tree.lua`: File explorer for Neovim.
+- `non-ls.lua`: Null-LS configuration for formatters and linters.
+- `telescope.lua`: Fuzzy finder for files, symbols, and more.
+- `treesitter.lua`: Better syntax highlighting and code folding.
 
 ## Features
 
