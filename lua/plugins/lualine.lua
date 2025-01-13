@@ -11,17 +11,17 @@ return {
                 globalstatus = true, -- Global status line across splits
             },
             sections = {
-                lualine_a = { 'mode' }, -- Shows current mode (Normal, Insert, etc.)
+                lualine_a = { 'buffers' }, -- Shows current mode (Normal, Insert, etc.)
                 lualine_b = { 'branch', 'diff', 'diagnostics' }, -- Shows Git branch, diff, diagnostics
-                lualine_c = { 'filename' }, -- Shows file name
-                lualine_x = { 'encoding', 'fileformat', 'filetype' }, -- Shows encoding, file format, and type
-                lualine_y = { 'progress' }, -- Shows file progress
+                lualine_c = {}, -- Shows file name
+                lualine_x = { 'filetype' }, -- Shows encoding, file format, and type
+                lualine_y = {  }, -- Shows file progress
                 lualine_z = { 'location' } -- Shows cursor location (line/col)
             },
             inactive_sections = {
                 lualine_a = {},
                 lualine_b = {},
-                lualine_c = { 'filename' }, -- Show file name on inactive windows
+                lualine_c = {}, -- Show file name on inactive windows
                 lualine_x = { 'location' },
                 lualine_y = {},
                 lualine_z = {}

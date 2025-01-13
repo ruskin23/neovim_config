@@ -31,26 +31,42 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    
+                    ["<CR>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            local entry = cmp.get_selected_entry()
+                            if entry then
+                                cmp.confirm({ select = false }) -- Confirm the selected entry
+                            else
+                                fallback() -- No selection, fallback to inserting a newline
+                            end
+                        else
+                            fallback() -- Menu not visible, insert a newline
+                        end
+                    end, { "i", "s" }),
+
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            cmp.select_next_item() -- Select next item in the menu
+                            cmp.select_next_item()
                         elseif require("luasnip").expand_or_jumpable() then
-                            require("luasnip").expand_or_jump() -- Expand snippet or jump to the next snippet placeholder
+                            require("luasnip").expand_or_jump()
                         else
-                            fallback() -- Fallback to normal Tab behavior if no completion menu
+                            fallback()
                         end
-                    end, { "i", "s" }), -- Works in insert and select modes
+                    end, { "i", "s" }),
+                    
+                    
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            cmp.select_prev_item() -- Select previous item in the menu
+                            cmp.select_prev_item()
                         elseif require("luasnip").jumpable(-1) then
-                            require("luasnip").jump(-1) -- Jump to the previous snippet placeholder
+                            require("luasnip").jump(-1)
                         else
-                            fallback() -- Fallback to normal Shift-Tab behavior
+                            fallback()
                         end
                     end, { "i", "s" }),
                 }),
+
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" }, -- LSP completion
                     { name = "luasnip" }, -- Snippet completions
