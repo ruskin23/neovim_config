@@ -61,5 +61,9 @@ else
     echo "flake8 is already in PATH."
 fi
 
+# Install ripgrep
+sudo apt install ripgrep
+
+
 echo "Neovim setup and Mason tools installation is complete!"
 

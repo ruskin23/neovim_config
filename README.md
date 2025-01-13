@@ -41,13 +41,6 @@ This repository contains my Neovim configuration. An `install.sh` script is incl
 | `<C-Right>`    | Focus the file buffer                  |
 | `<C-q>`        | Close Neo-tree                         |
 
-#### **Terminal Control**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<leader>t`    | Open terminal at the bottom             |
-| `<Esc>`        | Exit terminal mode                     |
-| `Ctrl+h/j/k/l` | Navigate between splits and Neo-tree    |
-
 #### **Autocomplete**
 | Shortcut       | Action                                   |
 |----------------|-----------------------------------------|
@@ -56,6 +49,58 @@ This repository contains my Neovim configuration. An `install.sh` script is incl
 | `<Ctrl>+Space` | Force open completion menu              |
 | `<Ctrl>+e`     | Close completion menu                   |
 | `<Enter>`      | Accept selected completion              |
+
+#### **Split Management**
+| Shortcut       | Action                                              |
+|----------------|----------------------------------------------------|
+| `<leader>sv`   | Open a file in a vertical split (waits for a file path) |
+| `<leader>sf`   | Open the current file in a vertical split          |
+| `<leader>sh`   | Open a file in a horizontal split (waits for a file path) |
+| `<leader>sb`   | Open the current file in a horizontal split        |
+| `<leader>o`    | Close all other panes                              |
+
+#### **Split Navigation**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `<C-h>`        | Move to the split on the left           |
+| `<C-j>`        | Move to the split below                 |
+| `<C-k>`        | Move to the split above                 |
+| `<C-l>`        | Move to the split on the right          |
+
+#### **Resize Panes**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `<leader>+`    | Increase pane height                    |
+| `<leader>-`    | Decrease pane height                    |
+| `<leader>>`    | Increase pane width                     |
+| `<leader><`    | Decrease pane width                     |
+
+#### **Pane and File Management**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `<leader>sw`   | Swap files between panes                |
+
+#### **Buffer Management**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `tk`           | Go to the last buffer                   |
+| `tj`           | Go to the first buffer                  |
+| `th`           | Go to the previous buffer               |
+| `tl`           | Go to the next buffer                   |
+| `td`           | Delete the current buffer               |
+
+#### **Search and Highlights**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `<leader>h`    | Clear search highlights manually        |
+| Enter Insert Mode | Automatically clears search highlights |
+
+#### **Telescope**
+| Shortcut       | Action                                   |
+|----------------|-----------------------------------------|
+| `<leader>ff`   | Find files                              |
+| `<leader>fg`   | Search for text in files (`live_grep`)  |
+
 
 ---
 
