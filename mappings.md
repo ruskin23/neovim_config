@@ -71,11 +71,11 @@ A comprehensive guide to all mappings in your Neovim configuration, organized by
 
 | Mapping | Description |
 |---------|-------------|
-| `tk` | Go to last buffer |
-| `tj` | Go to first buffer |
-| `th` | Go to previous buffer |
-| `tl` | Go to next buffer |
-| `td` | Delete current buffer |
+| `<leader>bf` | Go to first buffer |
+| `<leader>bl` | Go to last buffer |
+| `<leader>bp` | Go to previous buffer |
+| `<leader>bn` | Go to next buffer |
+| `<leader>bd` | Delete current buffer |
 | `:bnext` | Next buffer (default) |
 | `:bprev` | Previous buffer (default) |
 | `:bd` | Delete buffer (default) |
@@ -184,7 +184,7 @@ A comprehensive guide to all mappings in your Neovim configuration, organized by
 | Mapping | Description |
 |---------|-------------|
 | `<C-n>` | Toggle Neo-tree filesystem reveal left |
-| `<m-n>` | Close Neo-tree |
+| `<C-c>` | Close Neo-tree |
 
 ---
 
@@ -263,6 +263,7 @@ A comprehensive guide to all mappings in your Neovim configuration, organized by
 - `<C-n>` - File explorer
 - `<leader>w` - Save file
 - `<C-h/j/k/l>` - Window navigation
+- `<leader>bp/bn` - Buffer navigation
 
 ### Essential Default Mappings
 - `i` - Insert mode
@@ -290,7 +291,7 @@ A comprehensive guide to all mappings in your Neovim configuration, organized by
 - **LSP**: Automatically available for supported languages
 - **Autocompletion**: Tab to navigate, Enter to confirm
 - **Windows**: Use `<C-h/j/k/l>` for quick navigation
-- **Buffers**: Use `th/tl` for buffer switching
+- **Buffers**: Use `<leader>bp/bn` for buffer switching
 
 ---
 

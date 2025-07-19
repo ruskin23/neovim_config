@@ -67,11 +67,11 @@ This repository contains my personal Neovim configuration built with Lazy.nvim p
 - `<leader>tr` - Open terminal in right split
 
 ### Buffer Management
-- `tk` - Go to last buffer
-- `tj` - Go to first buffer
-- `th` - Go to previous buffer
-- `tl` - Go to next buffer
-- `td` - Delete current buffer
+- `<leader>bf` - Go to first buffer
+- `<leader>bl` - Go to last buffer
+- `<leader>bp` - Go to previous buffer
+- `<leader>bn` - Go to next buffer
+- `<leader>bd` - Delete current buffer
 
 ### File Swapping
 - `<leader>sw` - Swap files between panes
@@ -96,7 +96,7 @@ This repository contains my personal Neovim configuration built with Lazy.nvim p
 
 **Keymaps**:
 - `<C-n>` - Toggle Neo-tree filesystem reveal left
-- `<m-n>` - Close Neo-tree
+- `<C-c>` - Close Neo-tree
 
 ### Fuzzy Finder
 
@@ -304,6 +304,7 @@ sudo apt install -y neovim nodejs npm python3 python3-pip python3-dev build-esse
 2. Use `<C-n>` to open the file explorer
 3. Use `gd` to jump to definitions in supported languages
 4. Use `<leader>fg` to search for text across your project
+5. Use `<leader>bp/bn` to navigate between buffers
 
 ### LSP Features
 - Hover over symbols with `K` to see documentation

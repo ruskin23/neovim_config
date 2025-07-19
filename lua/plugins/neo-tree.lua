@@ -14,7 +14,7 @@ return {
         -- Move to next window (e.g., back to the file buffer)
         -- vim.keymap.set('n', '<C-Right>', ':wincmd w<CR>', { noremap = true, silent = true })
         -- Close Neo-tree
-        vim.keymap.set('n', '<m-n>', ':Neotree close<CR>', { noremap = true, silent = true })
+        vim.keymap.set('n', '<C-c>', ':Neotree close<CR>', { noremap = true, silent = true })
 
         require("neo-tree").setup({
             filesystem = {

@@ -47,11 +47,11 @@ end, { noremap = true, silent = true })
 
 
 -- buffers
-vim.api.nvim_set_keymap("n", "tk", ":blast<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "tj", ":bfirst<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "th", ":bprev<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "tl", ":bnext<enter>", {noremap=false})
-vim.api.nvim_set_keymap("n", "td", ":bdelete<enter>", {noremap=false})
+vim.api.nvim_set_keymap("n", "<leader>bf", ":bfirst<enter>", {noremap=true, silent=true})  -- first buffer
+vim.api.nvim_set_keymap("n", "<leader>bl", ":blast<enter>", {noremap=true, silent=true})  -- last buffer
+vim.api.nvim_set_keymap("n", "<leader>bp", ":bprev<enter>", {noremap=true, silent=true})  -- previous buffer
+vim.api.nvim_set_keymap("n", "<leader>bn", ":bnext<enter>", {noremap=true, silent=true})  -- next buffer
+vim.api.nvim_set_keymap("n", "<leader>bd", ":bdelete<enter>", {noremap=true, silent=true}) -- delete buffer
 
 -- Keybinding to clear search highlight manually
 vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>', { noremap = true, silent = true })
