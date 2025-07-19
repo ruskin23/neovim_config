@@ -1,210 +1,361 @@
 # Neovim Configuration
 
-This repository contains my Neovim configuration. An `install.sh` script is included to set everything up easily.
+This repository contains my personal Neovim configuration built with Lazy.nvim plugin manager. The configuration is organized with clear separation between general Neovim settings and plugin-specific configurations.
 
----
-## **Installed Plugins**
+## Table of Contents
+- [General Neovim Settings](#general-neovim-settings)
+- [General Keymaps](#general-keymaps)
+- [Plugins](#plugins)
+  - [File Explorer](#file-explorer)
+  - [Fuzzy Finder](#fuzzy-finder)
+  - [Language Server Protocol](#language-server-protocol)
+  - [Autocompletion](#autocompletion)
+  - [Syntax Highlighting](#syntax-highlighting)
+  - [Status Line](#status-line)
+  - [Theme](#theme)
+  - [Git Integration](#git-integration)
+  - [Utilities](#utilities)
 
-- `auto-cmp.lua`: Autocompletion configuration.
-- `autopairs.lua`: Automatically close pairs like brackets and quotes.
-- `bufferline.lua`: Enhanced buffer line with tabs.
-- `diagnostics.lua`: Displays LSP diagnostics with custom icons.
-- `gitsigns.lua`: Git integration with inline signs.
-- `gruvbox.lua`: Gruvbox theme for Neovim.
-- `lsp-config.lua`: Configuration for Language Server Protocol (LSP).
-- `lualine.lua`: Status line plugin.
-- `neo-tree.lua`: File explorer for Neovim.
-- `non-ls.lua`: Null-LS configuration for formatters and linters.
-- `telescope.lua`: Fuzzy finder for files, symbols, and more.
-- `treesitter.lua`: Better syntax highlighting and code folding.
+## General Neovim Settings
 
-## Features
+### Basic Settings
+- **Indentation**: 4 spaces, expand tabs
+- **Line Numbers**: Both absolute and relative line numbers enabled
+- **Leader Key**: Space
+- **Clipboard**: Integrated with system clipboard
 
-### **Key Mappings**
+### UI Settings
+- **True Color Support**: Enabled for better color display
+- **Search**: Case-insensitive with smart case (case-sensitive when uppercase used)
+- **Search Highlighting**: Enabled with incremental search
+- **Cursor**: Highlighted current line
+- **Scroll**: 8 lines/columns offset from edges
+- **Line Wrapping**: Disabled
+- **Mode Display**: Hidden (handled by status line)
+- **Sign Column**: Always visible
 
-#### **LSP Mappings**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `K`            | See hover documentation                |
-| `gd`           | Go to the definition of a symbol       |
-| `gr`           | Find all references to a symbol        |
-| `<leader>ca`   | Apply quick fixes or code suggestions  |
-| `<leader>rn`   | Rename symbols project-wide            |
-| `<leader>gf`   | Format the file                        |
-| `<C-o>`        | Return to the previous location        |
+### Performance Settings
+- **Update Time**: 250ms for faster completion
+- **Timeout Length**: 300ms for key sequence completion
 
-#### **Neo-tree Mappings**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<C-n>`        | Open Neo-tree and reveal the file       |
-| `<C-Left>`     | Focus Neo-tree                         |
-| `<C-Right>`    | Focus the file buffer                  |
-| `<C-q>`        | Close Neo-tree                         |
+## General Keymaps
 
-#### **Autocomplete**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<Tab>`        | Cycle forward through suggestions       |
-| `<S-Tab>`      | Cycle backward through suggestions      |
-| `<Ctrl>+Space` | Force open completion menu              |
-| `<Ctrl>+e`     | Close completion menu                   |
-| `<Enter>`      | Accept selected completion              |
+### File Operations
+- `<leader>w` - Save current file
 
-#### **Split Management**
-| Shortcut       | Action                                              |
-|----------------|----------------------------------------------------|
-| `<leader>sv`   | Open a file in a vertical split (waits for a file path) |
-| `<leader>sf`   | Open the current file in a vertical split          |
-| `<leader>sh`   | Open a file in a horizontal split (waits for a file path) |
-| `<leader>sb`   | Open the current file in a horizontal split        |
-| `<leader>o`    | Close all other panes                              |
+### Window Management
+- `<leader>sv` - Open file in vertical split (waits for file path)
+- `<leader>sf` - Open current file in vertical split
+- `<leader>sh` - Open file in horizontal split (waits for file path)
+- `<leader>sb` - Open current file in horizontal split
+- `<leader>o` - Close all other panes
 
-#### **Split Navigation**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<C-h>`        | Move to the split on the left           |
-| `<C-j>`        | Move to the split below                 |
-| `<C-k>`        | Move to the split above                 |
-| `<C-l>`        | Move to the split on the right          |
+### Window Navigation
+- `<C-h>` - Move to left window
+- `<C-j>` - Move to window below
+- `<C-k>` - Move to window above
+- `<C-l>` - Move to right window
 
-#### **Resize Panes**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<leader>+`    | Increase pane height                    |
-| `<leader>-`    | Decrease pane height                    |
-| `<leader>>`    | Increase pane width                     |
-| `<leader><`    | Decrease pane width                     |
+### Window Resizing
+- `<leader>+` - Increase window height
+- `<leader>-` - Decrease window height
+- `<leader>>` - Increase window width
+- `<leader><` - Decrease window width
 
-#### **Pane and File Management**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<leader>sw`   | Swap files between panes                |
+### Terminal
+- `<leader>tb` - Open terminal in bottom split
+- `<leader>tr` - Open terminal in right split
 
-#### **Buffer Management**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `tk`           | Go to the last buffer                   |
-| `tj`           | Go to the first buffer                  |
-| `th`           | Go to the previous buffer               |
-| `tl`           | Go to the next buffer                   |
-| `td`           | Delete the current buffer               |
+### Buffer Management
+- `tk` - Go to last buffer
+- `tj` - Go to first buffer
+- `th` - Go to previous buffer
+- `tl` - Go to next buffer
+- `td` - Delete current buffer
 
-#### **Search and Highlights**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<leader>h`    | Clear search highlights manually        |
-| Enter Insert Mode | Automatically clears search highlights |
+### File Swapping
+- `<leader>sw` - Swap files between panes
 
-#### **Telescope**
-| Shortcut       | Action                                   |
-|----------------|-----------------------------------------|
-| `<leader>ff`   | Find files                              |
-| `<leader>fg`   | Search for text in files (`live_grep`)  |
+### Search
+- `<leader>h` - Clear search highlights manually
+- **Auto-clear**: Search highlights automatically cleared when entering insert mode
 
+## Plugins
 
----
+### File Explorer
 
-### **Visual Enhancements**
-- **Diagnostic Signs**:
-  - `✘` (Error): Serious issues (e.g., syntax errors).
-  - `▲` (Warning): Potential problems.
-  - `►` (Information): Informational hints.
-  - `•` (Hint): Style suggestions or optional improvements.
+**Plugin**: `nvim-neo-tree/neo-tree.nvim`
 
-- **Git Signs**:
-  - `+`: New lines not in the last commit.
-  - `│`: Modified lines since last commit.
-  - `_`: Deleted lines.
-  - `?`: Untracked files.
+**Purpose**: Modern file explorer with tree view, git integration, and file operations.
 
----
+**Settings**:
+- Branch: v3.x
+- Dependencies: plenary.nvim, nvim-web-devicons, nui.nvim
+- Filtered items visible
+- Show dotfiles and gitignored files
 
-### **Supported Languages**
+**Keymaps**:
+- `<C-n>` - Toggle Neo-tree filesystem reveal left
+- `<m-n>` - Close Neo-tree
 
-1. **Python**:
-   - LSP: Pyright.
-   - Formatting: Built-in.
+### Fuzzy Finder
 
-2. **Lua**:
-   - LSP: Lua language server (`lua_ls`).
-   - Diagnostics configured to ignore Neovim globals like `vim`.
+**Plugin**: `nvim-telescope/telescope.nvim`
 
-3. **C/C++**:
-   - LSP: Clangd.
+**Purpose**: Fuzzy finder for files, text, buffers, and more with ripgrep integration.
 
-4. **JavaScript/React**:
-   - TreeSitter: Syntax highlighting and folding.
-   - LSP (Optional): Can be added for smarter features like code completion and error checking.
+**Settings**:
+- Uses ripgrep for live grep with smart case
+- Shows line numbers and columns
+- Ignores git, node_modules, lock files, and cache directories
+- Includes hidden files in find_files
+- UI-select extension for dropdown themes
 
----
+**Keymaps**:
+- `<leader>ff` - Find files
+- `<leader>fg` - Live grep (search text in files)
+- `<leader>fb` - Find buffers
+- `<leader>fh` - Find help tags
+- `<leader>fo` - Find old files
+
+### Language Server Protocol
+
+**Plugin**: `neovim/nvim-lspconfig` + `williamboman/mason.nvim` + `williamboman/mason-lspconfig.nvim`
+
+**Purpose**: Language server support for intelligent code completion, diagnostics, and navigation.
+
+**Settings**:
+- **Diagnostic Signs**: Custom icons for different severity levels
+  - Error: ✘
+  - Warning: ▲
+  - Info: ►
+  - Hint: •
+- **Virtual Text**: Only shows warnings and above
+- **Severity Sort**: Enabled
+
+**Supported Languages**:
+- **Lua**: lua_ls with Neovim globals ignored
+- **Python**: Pyright with unused variable/function warnings disabled
+- **C/C++**: Clangd with background indexing and clang-tidy
+- **TypeScript/JavaScript**: ts_ls
+
+**Keymaps** (applied to all LSP buffers):
+- `K` - Hover documentation
+- `gd` - Go to definition
+- `gr` - Find references
+- `<leader>ca` - Code actions
+- `<leader>rn` - Rename symbol
+- `<leader>gf` - Format buffer
+
+### Autocompletion
+
+**Plugin**: `hrsh7th/nvim-cmp` + `L3MON4D3/LuaSnip`
+
+**Purpose**: Intelligent autocompletion with LSP integration and snippet support.
+
+**Settings**:
+- LSP integration via cmp-nvim-lsp
+- Buffer and path completion
+- VSCode-style snippet loading
+- Integration with nvim-autopairs
+
+**Keymaps**:
+- `<C-Space>` - Force completion menu
+- `<C-e>` - Close completion menu
+- `<Tab>` - Select next item or expand snippet
+- `<S-Tab>` - Select previous item or jump snippet
+- `<CR>` - Confirm selection or insert newline
+
+### Syntax Highlighting
+
+**Plugin**: `nvim-treesitter/nvim-treesitter`
+
+**Purpose**: Advanced syntax highlighting, indentation, and code manipulation.
+
+**Settings**:
+- Auto-install parsers
+- Ensured parsers: lua, python, javascript, html, css, c
+- Syntax highlighting enabled
+- Indentation enabled
+- Incremental selection enabled
+
+**Keymaps**:
+- `gnn` - Init selection
+- `grn` - Node incremental
+- `grc` - Scope incremental
+- `grm` - Node decremental
+
+### Status Line
+
+**Plugin**: `nvim-lualine/lualine.nvim`
+
+**Purpose**: Modern status line with git integration and file information.
+
+**Settings**:
+- Theme: gruvbox-material
+- Global status line across splits
+- Icons enabled (requires nvim-web-devicons)
+- Extensions: neo-tree, quickfix
+
+**Sections**:
+- **A**: Buffers
+- **B**: Branch, diff, diagnostics
+- **C**: File name
+- **X**: File type
+- **Z**: Location (line/column)
+
+### Theme
+
+**Plugin**: `sainnhe/gruvbox-material`
+
+**Purpose**: Material design variant of the Gruvbox color scheme.
+
+**Settings**:
+- Background: hard
+- Foreground: material palette
+- Italics and bold enabled
+- Transparent background
+- Performance optimization enabled
+- Custom highlights for line numbers and status line
+
+### Git Integration
+
+**Plugin**: `lewis6991/gitsigns.nvim`
+
+**Purpose**: Git status indicators in the sign column.
+
+**Settings**:
+- Event: BufReadPre, BufNewFile
+- Sign column enabled
+- Custom signs:
+  - Add: +
+  - Change: │
+  - Delete: _
+  - Top delete: ‾
+  - Changedelete: ~
+
+### Utilities
+
+#### Auto Pairs
+**Plugin**: `windwp/nvim-autopairs`
+
+**Purpose**: Automatically close brackets, quotes, and other pairs.
+
+**Settings**:
+- Treesitter integration enabled
+- Disabled in TelescopePrompt and vim filetypes
+- Integration with nvim-cmp for completion
+
+#### Surround
+**Plugin**: `kylechui/nvim-surround`
+
+**Purpose**: Surround text with brackets, quotes, or other delimiters.
+
+**Settings**:
+- Latest stable version
+- Event: VeryLazy
+- Default configuration
 
 ## Installation
 
-### **Dependencies**
-Ensure you have the following installed:
+### Prerequisites
 - Neovim (v0.8 or higher)
 - Git
-- Node.js (for JavaScript LSPs)
-- Python 3 (with `pip` for Python LSP)
-- C Compiler (e.g., GCC/Clang for Clangd LSP)
+- Node.js (for TypeScript/JavaScript LSP)
+- Python 3 (for Python LSP)
+- C/C++ compiler (for Clangd LSP)
 
-### **Install Script**
-Run the `install.sh` script to install Neovim and all required dependencies:
+### Setup
+1. Clone this repository to a temporary location
+2. Run the installation script: `./install.sh`
+3. The script will install all dependencies and copy configuration files
+4. Restart your terminal or run: `source ~/.bashrc`
+5. Start Neovim: `nvim`
+6. Wait for plugins to install automatically
+
+### Manual Installation (if script fails)
+If the installation script doesn't work, install dependencies manually:
+
+**System Dependencies:**
 ```bash
-chmod +x install.sh
-./install.sh
+sudo apt update
+sudo apt install -y neovim nodejs npm python3 python3-pip python3-dev build-essential clang ripgrep git curl wget unzip lua5.4 liblua5.4-dev
 ```
 
-This will:
-- Install Neovim and plugins.
-- Set up LSP servers for Python, Lua, C/C++.
-- Install Node.js for JavaScript/React TreeSitter support.
-
----
-
-## How to Use
-
-### **Open Neovim**
-```bash
-nvim
+**LSP Servers:**
+```vim
+:MasonInstall lua_ls pyright clangd ts_ls
 ```
 
-### **Explore Neo-tree**
-1. Press `<C-n>` to open Neo-tree.
-2. Use `<C-Left>` and `<C-Right>` to navigate between the sidebar and file buffer.
-3. Press `<C-q>` to close Neo-tree.
+**Formatters:**
+```vim
+:MasonInstall black clang-format stylua flake8 isort
+```
 
-### **Code Navigation**
-- Jump to definitions with `gd`.
-- Find references with `gr`.
-- Go back to the previous location with `<C-o>`.
+**Treesitter Parsers:**
+```vim
+:TSInstall lua python javascript html css c
+```
 
-### **Git Integration**
-- See signs (`+`, `_`, `|`, etc.) in the sign column for changes in files.
-- Use Git commands (`git add`, `git commit`, etc.) in the integrated terminal.
+## Usage Tips
 
----
+### Getting Started
+1. Use `<leader>ff` to find files quickly
+2. Use `<C-n>` to open the file explorer
+3. Use `gd` to jump to definitions in supported languages
+4. Use `<leader>fg` to search for text across your project
 
-## Customization
-This configuration is modular, so you can easily add or modify plugins. Key files include:
-- `init.lua`: Main Neovim configuration.
-- `plugins/`: Directory for managing plugins.
-- `lsp-config.lua`: LSP setup for different languages.
+### LSP Features
+- Hover over symbols with `K` to see documentation
+- Use `<leader>ca` for code actions and quick fixes
+- Use `<leader>rn` to rename symbols across your project
+- Use `<leader>gf` to format your code
 
----
+### Window Management
+- Use `<C-h/j/k/l>` for quick window navigation
+- Use `<leader>+/-` and `<leader></>` for window resizing
+- Use `<leader>o` to focus on the current window
 
 ## Troubleshooting
 
-### **LSP Not Working?**
-- Run `:LspInfo` to check if the language server is running.
-- Restart the LSP with `:LspRestart`.
+### Plugins Not Loading
+- Check if Lazy.nvim is properly installed
+- Run `:Lazy sync` to sync plugins
+- Check for syntax errors in plugin files
 
-### **Plugins Not Installing?**
-- Ensure your internet connection is active.
-- Run `:PackerSync` or `:Lazy sync` (depending on the plugin manager).
+### LSP Not Working
+- Run `:LspInfo` to check LSP status
+- Run `:Mason` to install missing LSP servers
+- Check if language servers are installed on your system
 
----
+### Performance Issues
+- Disable unused plugins by commenting them out
+- Check for large files or directories being indexed
+- Monitor plugin loading times with `:Lazy profile`
+
+## Configuration Structure
+
+```
+~/.config/nvim/
+├── init.lua              # Main entry point
+├── lua/
+│   ├── settings.lua      # General Neovim settings
+│   ├── keymaps.lua       # General keymaps
+│   └── plugins/          # Plugin configurations
+│       ├── auto-cmp.lua
+│       ├── autopairs.lua
+│       ├── gitsigns.lua
+│       ├── gruvbox.lua
+│       ├── lsp-config.lua
+│       ├── lualine.lua
+│       ├── neo-tree.lua
+│       ├── surround.lua
+│       ├── telescope.lua
+│       └── treesitter.lua
+└── lazy-lock.json        # Plugin lock file
+```
 
 ## Credits
-Claude and GPT-4o. Although they failed at times, then I had to dig through documentation. Why do LSP exist again?
+
+This configuration is built on top of the excellent Neovim ecosystem with plugins from the community. Special thanks to the maintainers of Lazy.nvim, nvim-lspconfig, and all the other plugins that make this setup possible.
 

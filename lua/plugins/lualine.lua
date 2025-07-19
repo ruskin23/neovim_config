@@ -27,7 +27,7 @@ return {
                 lualine_z = {}
             },
             tabline = {},
-            extensions = { 'nvim-tree', 'quickfix' } -- Add extensions like nvim-tree or quickfix if used
+            extensions = { 'neo-tree', 'quickfix' } -- Add extensions like neo-tree or quickfix if used
         }
     end
 }

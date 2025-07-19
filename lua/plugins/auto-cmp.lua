@@ -1,6 +1,4 @@
 return {
-    -- Existing plugins...
-
     -- nvim-cmp: Main autocompletion engine
     {
         "hrsh7th/nvim-cmp",
@@ -18,7 +16,6 @@ return {
         },
         config = function()
             local cmp = require("cmp")
-
 
             cmp.setup({
                 snippet = {
@@ -55,7 +52,6 @@ return {
                         end
                     end, { "i", "s" }),
                     
-                    
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
@@ -75,15 +71,15 @@ return {
                     { name = "path" }, -- Path completions
                 }),
             })
-            end
-        },
+        end
+    },
 
-        -- LuaSnip: Snippet engine (required for nvim-cmp)
-        {
-            "L3MON4D3/LuaSnip",
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load() -- Load snippets from VSCode-style libraries
-            end
-        },
-    }
+    -- LuaSnip: Snippet engine (required for nvim-cmp)
+    {
+        "L3MON4D3/LuaSnip",
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load() -- Load snippets from VSCode-style libraries
+        end
+    },
+}
 

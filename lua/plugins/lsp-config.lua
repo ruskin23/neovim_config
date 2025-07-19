@@ -26,6 +26,26 @@ return {
     -- nvim-lspconfig: Setup LSPs for Lua, Python, C/C++, and Rust
     {
         "neovim/nvim-lspconfig",
+        init = function()
+            -- Configure diagnostic signs with new syntax
+            vim.diagnostic.config({
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = '✘',
+                        [vim.diagnostic.severity.WARN] = '▲',
+                        [vim.diagnostic.severity.INFO] = '►',
+                        [vim.diagnostic.severity.HINT] = '•'
+                    }
+                },
+                -- Keep your existing severity settings
+                severity_sort = true,
+                virtual_text = {
+                    severity = {
+                        min = vim.diagnostic.severity.WARN
+                    }
+                }
+            })
+        end,
         config = function()
             local lspconfig = require("lspconfig")
             local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -104,12 +124,6 @@ return {
             end
         })
 
-        
-            -- Rust LSP (for future setup, can be commented out for now)
-            -- lspconfig.rust_analyzer.setup({
-            --    capabilities = capabilities,
-            -- })
-
         -- JavaScript/TypeScript LSP
         lspconfig.ts_ls.setup({
             capabilities = capabilities,
@@ -125,21 +139,21 @@ return {
             end
         })
 
-            -- Global key mappings using LspAttach event for all LSPs
-            vim.api.nvim_create_autocmd("LspAttach", {
-                callback = function(args)
-                    local bufnr = args.buf
-                    local opts = { noremap = true, silent = true, buffer = bufnr }
+        -- Global key mappings using LspAttach event for all LSPs
+        vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+                local bufnr = args.buf
+                local opts = { noremap = true, silent = true, buffer = bufnr }
 
-                    -- Key mappings for LSP features
-                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)               -- Hover documentation
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)         -- Go to definition
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)         -- Find references
-                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts) -- Code actions
-                    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)     -- Rename symbol
-                    vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format, opts)     -- Format the current buffer
-                end,
-            })
+                -- Key mappings for LSP features
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)               -- Hover documentation
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)         -- Go to definition
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)         -- Find references
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts) -- Code actions
+                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)     -- Rename symbol
+                vim.keymap.set('n', '<leader>gf', vim.lsp.buf.format, opts)     -- Format the current buffer
+            end,
+        })
         end
     }
 }
