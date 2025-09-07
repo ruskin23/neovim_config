@@ -43,7 +43,6 @@ install_package() {
     
     if ! command_exists "$package"; then
         print_status "Installing $package_name..."
-        sudo apt update
         sudo apt install -y "$package_name"
         print_success "$package_name installed successfully"
     else
@@ -67,6 +66,9 @@ install_package "nvim" "neovim"
 # Check Neovim version
 NVIM_VERSION=$(nvim --version | head -n1 | cut -d' ' -f2)
 print_status "Neovim version: $NVIM_VERSION"
+
+# Ensure curl is available before Node install
+install_package "curl" "curl"
 
 # Install Node.js and npm (required for TypeScript LSP and other tools)
 if ! command_exists node; then
@@ -99,6 +101,8 @@ install_package "git" "git"
 install_package "curl" "curl"
 install_package "wget" "wget"
 install_package "unzip" "unzip"
+install_package "rsync" "rsync"
+install_package "fdfind" "fd-find"
 
 # Install Lua development tools (optional but useful)
 install_package "lua5.4" "lua5.4"
@@ -114,7 +118,7 @@ fi
 # Copy configuration files if they don't exist
 if [ ! -f "$CONFIG_DIR/init.lua" ]; then
     print_status "Copying configuration files..."
-    cp -r . "$CONFIG_DIR/"
+    rsync -a --exclude ".git" --exclude "install.sh" --exclude ".gitignore" ./ "$CONFIG_DIR/"
     print_success "Configuration files copied"
 else
     print_warning "Neovim configuration already exists at $CONFIG_DIR"
@@ -146,13 +150,37 @@ fi
 # Source bashrc to update PATH for current session
 export PATH="$MASON_BIN:$PATH"
 
+# Add PATH for zsh
+if [ -n "$ZSH_VERSION" ] || [ -f "$HOME/.zshrc" ]; then
+    if ! grep -q "$MASON_BIN" "$HOME/.zshrc" 2>/dev/null; then
+        {
+            echo ""
+            echo "# Neovim Mason tools"
+            echo "export PATH=\"$MASON_BIN:\$PATH\""
+        } >> "$HOME/.zshrc"
+        print_success "Mason bin directory added to zsh PATH"
+    else
+        print_status "Mason bin directory already in zsh PATH"
+    fi
+fi
+
+# Add PATH for fish
+if command_exists fish; then
+    if ! fish -c 'contains -- $HOME/.local/share/nvim/mason/bin $fish_user_paths' >/dev/null 2>&1; then
+        fish -c 'set -U fish_user_paths $HOME/.local/share/nvim/mason/bin $fish_user_paths' || true
+        print_success "Mason bin directory added to fish PATH"
+    else
+        print_status "Mason bin directory already in fish PATH"
+    fi
+fi
+
 # Install Mason tools and LSP servers
 print_status "Installing Mason tools and LSP servers..."
-nvim --headless -c "MasonInstall lua_ls pyright clangd ts_ls" -c "MasonInstall black clang-format stylua flake8 isort" -c "qa!"
+nvim --headless -c "MasonInstall lua-language-server pyright clangd typescript-language-server" -c "MasonInstall black clang-format stylua flake8 isort" -c "qa!"
 
 # Install Treesitter parsers
 print_status "Installing Treesitter parsers..."
-nvim --headless -c "TSInstall lua python javascript html css c" -c "qa!"
+nvim --headless +"TSUpdateSync lua python javascript html css c" +qa
 
 # Verify installations
 print_status "Verifying installations..."

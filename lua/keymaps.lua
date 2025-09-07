@@ -25,6 +25,12 @@ vim.keymap.set('n', '<leader>-', ':resize -2<CR>', { noremap = true, silent = tr
 vim.keymap.set('n', '<leader>>', ':vertical resize +2<CR>', { noremap = true, silent = true }) -- Increase width
 vim.keymap.set('n', '<leader><', ':vertical resize -2<CR>', { noremap = true, silent = true }) -- Decrease width
 
+-- Alternative resize mappings (more reliable)
+vim.keymap.set('n', '<leader>rh', ':resize +2<CR>', { noremap = true, silent = true })  -- Increase height
+vim.keymap.set('n', '<leader>rl', ':resize -2<CR>', { noremap = true, silent = true })  -- Decrease height
+vim.keymap.set('n', '<leader>rw', ':vertical resize +2<CR>', { noremap = true, silent = true }) -- Increase width
+vim.keymap.set('n', '<leader>rn', ':vertical resize -2<CR>', { noremap = true, silent = true }) -- Decrease width
+
 -- Keymaps for opening terminals
 vim.keymap.set('n', '<leader>tb', ':belowright split | terminal<CR> | i', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>tr', ':vertical belowright split | terminal<CR> | i', { noremap = true, silent = true })

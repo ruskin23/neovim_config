@@ -56,6 +56,12 @@ A comprehensive guide to all mappings in your Neovim configuration, organized by
 | `<leader>-` | Decrease window height |
 | `<leader>>` | Increase window width |
 | `<leader><` | Decrease window width |
+| `<leader>rh` | Increase window height (alternative) |
+| `<leader>rl` | Decrease window height (alternative) |
+| `<leader>rw` | Increase window width (alternative) |
+| `<leader>rn` | Decrease window width (alternative) |
+
+> **Note**: The `+` and `<` keys may not work in some terminal emulators due to key interception. Use the alternative mappings (`rh`, `rl`, `rw`, `rn`) if the original ones don't work.
 
 ### Window Control
 | Mapping | Description |
